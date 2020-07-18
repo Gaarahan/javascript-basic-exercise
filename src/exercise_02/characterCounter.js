@@ -1,10 +1,15 @@
 export default function countCharacter(string, prediction) {
-  // This function will count the character number in a string which satisfies specific prediction.
-  //
+  // This function will count the character number in a string which satisfies specific prediction. //
   // Your target:
   //
   // * Please implement this function and pass all the tests in character_counter_spec.js.
   // * Please do NOT modify the signature of the function.
 
-  throw new Error('Please delete this line and implement the function');
+  const countPrediction = (s, f) => {
+    if(!f) {
+      return s.length;
+    }
+    return s.split('').filter(f).length;
+  }
+  return string?countPrediction(string,prediction):0;
 }
