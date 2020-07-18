@@ -9,5 +9,29 @@ export default function waitForAll(...promises) {
   // * Please implement this function and pass all the tests in wait_for_all_spec.js.
   // * Please do NOT modify the signature of the function.
 
-  throw new Error('Please delete this line and implement the function');
+  // return Promise.all(promises)
+  if (promises.some(itm => !(itm instanceof Promise))) {
+    throw new Error('Not all elements are promises.')
+  }
+
+  return new Promise((resolve, reject) => {
+    let counter = 0;
+    for(let i = 0; i< promises.length; i++){
+      promises[i].then( () => {
+            counter ++;
+            if (counter === promises.length) {
+              resolve()
+            }
+          },
+          () => {
+        // avoid Jest handle the unhandled reject, which will throw error
+        //     https://github.com/facebook/jest/issues/6516
+
+          }).finally(() => {
+        if (i === promises.length -1 && counter !== promises.length) {
+          reject()
+        }
+      });
+        }
+  });
 }
